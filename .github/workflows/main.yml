@@ -15,8 +15,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # 转到 Settings > Secrets and variables > Actions
-          # 点击 New repository secret，添加 Secret，名称为 BOT，输入你的token
           token: ${{ secrets.BOT }}
 
       - name: Set up Python
@@ -26,17 +24,17 @@ jobs:
 
       - name: Install requirements.txt
         run: |
-          pip install -r ./requirements.txt
+          pip install -r data/requirements.txt
 
       - name: Run main.py
-        run: python main.py
+        run: python data/main.py
 
       - name: Commit and push file
         run: |
           set +e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add v2ray.txt all.txt v2ray_raw.txt
+          git add data/v2ray.txt data/all.txt data/v2ray_raw.txt
           git commit -m "update" || echo "No changes to commit"
           git pull --rebase
           if [ $? -ne 0 ]; then
